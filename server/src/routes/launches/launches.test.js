@@ -1,9 +1,7 @@
 const request = require('supertest');
 const app = require('../../app');
-
 const { mongoConnect, mongoDisconnect } = require('../../services/mongo');
 const { loadPlanetsData } = require('../../models/planets.model');
-const { loadLaunchData } = require('../../models/launches.model');
 
 describe('Launches API', () => {
   beforeAll(async () => {
@@ -24,7 +22,7 @@ describe('Launches API', () => {
     });
   });
 
-  describe('Test POST /launches', () => {
+  describe('Test POST /launch', () => {
     const completeLaunchData = {
       mission: 'USS Enterprise',
       rocket: 'NCC 1701-D',
@@ -44,7 +42,8 @@ describe('Launches API', () => {
       target: 'Kepler-62 f',
       launchDate: 'zoot',
     };
-    test('It should respond with 201 success', async () => {
+
+    test('It should respond with 201 created', async () => {
       const response = await request(app)
         .post('/v1/launches')
         .send(completeLaunchData)
